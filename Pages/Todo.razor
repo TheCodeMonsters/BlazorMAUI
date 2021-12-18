@@ -1,21 +1,33 @@
 ﻿@page "/todo"
 @using MAUIBlazor.TodoList
 
-
-
 <PageTitle>Todo</PageTitle>
 
-<h1>Tareas</h1>
+<h2>Tareas (@todos.Count(todo => !todo.IsDone))</h2>
+
+<input placeholder="Tarea" @bind="newTodo" />
+<button class="btn btn-success" @onclick="AddTodo">Add todo</button>
+
 
 <ul>
     @foreach (var todo in todos)
     {
-        <li>@todo.Title</li>
+        <li>
+           <input type="checkbox" @bind="todo.IsDone" />
+           
+           @if(todo.IsDone)
+            {
+                <s>@todo.Title</s>
+            }
+            else
+            {
+                <input @bind="todo.Title" />
+            }
+
+        </li>
     }
 </ul>
 
-<input placeholder="Tarea" @bind="newTodo" />
-<button class="btn btn-success" @onclick="AddTodo">Add todo</button>
 
 @code {
     private List<TodoItem> todos = new();
